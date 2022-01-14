@@ -13,8 +13,11 @@ create table ders
     id  int          not null
         primary key,
     ad  varchar(255) null,
-    kod varchar(255) null
+    kod varchar(255) null,
+    constraint UK_6jb2huo0ix1mkvljtmrfmdswl
+        unique (kod)
 );
+
 
 create table ogretmen
 (
@@ -40,11 +43,16 @@ create table sinif
 (
     id          int          not null
         primary key,
+    kapasite    int          null,
     no          varchar(255) null,
     ogretmen_id int          null,
+    constraint UK_sfl2v1dhvbvlgoo5aatrfg8cy
+        unique (no),
     constraint FK1b3k5l7pxponitdlpn6r88a38
         foreign key (ogretmen_id) references ogretmen (id)
 );
+
+
 
 alter table ogretmen
     add constraint FK177bic84bck4olmn3sgop7lg9
