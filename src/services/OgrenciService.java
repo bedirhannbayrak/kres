@@ -5,6 +5,7 @@
 package services;
 
 import dto.OgrenciSinifOgretmenTableDto;
+import dto.SinifOgretmenDto;
 import entitites.Ogrenci;
 import entitites.Ogretmen;
 import entitites.Sinif;
@@ -80,7 +81,7 @@ public class OgrenciService {
                 String ogretmenAd;
                 String ogretmenSoyad;
                 dto.setSinifNo(rs.getString(4));
-                if (rs.getString(4) != null) {
+                if (rs.getString(5) != null) {
                     ogretmenAd = rs.getString(5);
                     ogretmenSoyad = rs.getString(6);
                     dto.setOgretmenAdSoyad(ogretmenAd + " " + ogretmenSoyad);
@@ -119,45 +120,26 @@ public class OgrenciService {
         return ogretmen;
     }
 
-    public void addSinif(int ogretmenId, int sinifId) {
-        String QUERY = "UPDATE ogretmen set sinif_id=" + sinifId + " where id=" + ogretmenId;
+    public void addOgretmen(int ogrenciId, int ogretmenId) {
+        String QUERY = "UPDATE ogrenci set ogretmen_id=" + ogretmenId + " where id=" + ogrenciId;
         InsertUpdateDelete.setData(QUERY, "");
     }
 
-    public void deleteSinif(int ogretmenId) {
-        String QUERY = "UPDATE ogretmen set sinif_id=null where id='" + ogretmenId + "' ";
+    public void deleteSinifAndOgretmen(int ogrenciId) {
+        String QUERY = "UPDATE ogrenci set sinif_id=null,ogretmen_id=null where id=" + ogrenciId;
         InsertUpdateDelete.setData(QUERY, "");
     }
 
-    public List<Ogretmen> findAll() {
-        List<Ogretmen> ogretmenler = new ArrayList<>();
-
-        try {
-            ResultSet rs = Select.getData("SELECT * FROM ogretmen");
-            while (rs.next()) {
-                Ogretmen ogretmen = new Ogretmen();
-                ogretmen.setId(Integer.parseInt(rs.getString(1)));
-                ogretmen.setAd(rs.getString(2));
-                ogretmen.setSoyad(rs.getString(3));
-                ogretmen.setBrans(rs.getString(4));
-
-                if (rs.getString(5) != null) {
-                    int sinifId = Integer.parseInt(rs.getString(5));
-
-                    sinifService = new SinifService();
-                    Sinif sinif = sinifService.findByIdLazy(sinifId);
-                    sinif.setOgretmen(ogretmen);
-                    ogretmen.setSinif(sinif);
-                }
-
-                ogretmenler.add(ogretmen);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-            e.printStackTrace();
-            System.out.println("findAll error" + e.getMessage());
+    public void addSinifAndOgretmenBySinifNo(int ogrenciId, String sinifNo) {
+        sinifService = new SinifService();
+        SinifOgretmenDto dto = sinifService.findSinifOgretmenDtoBySinifNo(sinifNo);
+        String QUERY;
+        if (dto.getOgretmenAd() != null) {
+            QUERY = "UPDATE ogrenci set sinif_id=" + dto.getSinifId() + ",ogretmen_id=" + dto.getOgretmenId() + " where id=" + ogrenciId ;
+        } else {
+            QUERY = "UPDATE ogrenci set sinif_id=" + dto.getSinifId() + " where id=" + ogrenciId;
         }
-        return ogretmenler;
+        InsertUpdateDelete.setData(QUERY, "");
     }
 
 }

@@ -4,6 +4,7 @@
  */
 package services;
 
+import dto.SinifOgretmenDto;
 import entitites.Ogretmen;
 import entitites.Sinif;
 import java.sql.ResultSet;
@@ -21,6 +22,36 @@ import project.Util;
 public class SinifService {
 
     OgretmenService ogretmenService;
+
+    public SinifOgretmenDto findSinifOgretmenDtoBySinifNo(String sinifNo) {
+        ResultSet rs = Select.getData("select "
+                + "sinif.id,sinif.kapasite,sinif.no,sinif.ogretmen_id,ogretmen.ad,ogretmen.soyad,ogretmen.sinif_id "
+                + "from sinif "
+                + "left join ogretmen "
+                + "on sinif.ogretmen_id = ogretmen.id "
+                + "where sinif.no='" + sinifNo + "'");
+        SinifOgretmenDto dto = new SinifOgretmenDto();
+        try {
+            while (rs.next()) {
+                dto.setSinifId(Integer.parseInt(rs.getString(1)));
+                dto.setSinifKapasite(Integer.parseInt(rs.getString(2)));
+                dto.setSinifNo(rs.getString(3));
+                if (rs.getString(4) != null) {
+                    dto.setOgretmenId(Integer.parseInt(rs.getString(4)));
+                    dto.setOgretmenAd(rs.getString(5));
+                    dto.setOgretmenSoyad(rs.getString(6));
+                }
+
+            }
+            rs.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            e.printStackTrace();
+            System.out.println("SınıfService findById error" + e.getMessage());
+        }
+        return dto;
+    }
 
     public Sinif updateWithoutOgretmen(Sinif sinif) {
         String QUERY = "UPDATE sinif SET kapasite=" + sinif.getKapasite() + ",no='" + sinif.getNo() + "' where id=" + sinif.getId();
