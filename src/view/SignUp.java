@@ -21,6 +21,7 @@ public class SignUp extends javax.swing.JFrame {
      */
     public SignUp() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -48,8 +49,8 @@ public class SignUp extends javax.swing.JFrame {
         setTitle("Kres Yonetim");
         setSize(new java.awt.Dimension(1336, 768));
 
-        SignUp.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        SignUp.setText("Signup");
+        SignUp.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        SignUp.setText("Kayıt Ol");
 
         Name.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Name.setText("İsim");
@@ -105,34 +106,36 @@ public class SignUp extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(624, 624, 624)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(590, 590, 590)
-                        .addComponent(SignUp))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(490, 490, 490)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Email)
-                            .addComponent(Name)
-                            .addComponent(Password1)
-                            .addComponent(Password))
-                        .addGap(18, 18, 18)
+                        .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(499, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(134, 134, 134)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Email)
+                                    .addComponent(Name)
+                                    .addComponent(Password1)
+                                    .addComponent(Password))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(191, 191, 191)
+                        .addComponent(SignUp)))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
+                .addGap(69, 69, 69)
                 .addComponent(SignUp)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Name))
@@ -152,7 +155,7 @@ public class SignUp extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap(7119, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -164,20 +167,20 @@ public class SignUp extends javax.swing.JFrame {
         String sifre = jPasswordField1.getText();
         String sifre2 = jPasswordField2.getText();
         System.out.println(isim);
-        
-        if (isim.length()<3 || kullaniciAdi.length()<3 || sifre.length()<3 || sifre2.length()<3 ){
-            JOptionPane.showMessageDialog(null, "Every field must be longer then 3 characters");
-        }else {
-            if ( !sifre.equals(sifre2)){
-            JOptionPane.showMessageDialog(null, "Passwords not matched");            
-        }else {
-              int randomId = Util.random();
-              String Query ;
-              Query = "INSERT INTO yonetici values('"+randomId+"','"+isim+"','','"+kullaniciAdi+"','"+sifre+"')";
-              InsertUpdateDelete.setData(Query, "Registered successfully");
-              setVisible(false);
-              new Login().setVisible(true);
-            }            
+
+        if (isim.length() < 3 || kullaniciAdi.length() < 3 || sifre.length() < 3 || sifre2.length() < 3) {
+            JOptionPane.showMessageDialog(null, "Tüm alanlar 3 karakterden uzun olmalıdır");
+        } else {
+            if (!sifre.equals(sifre2)) {
+                JOptionPane.showMessageDialog(null, "Parolalar eşleşmiyor");
+            } else {
+                int randomId = Util.random();
+                String Query;
+                Query = "INSERT INTO yonetici values('" + randomId + "','" + isim + "','','" + kullaniciAdi + "','" + sifre + "')";
+                InsertUpdateDelete.setData(Query, "Kayıt olundu");
+                setVisible(false);
+                new Login().setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -192,7 +195,7 @@ public class SignUp extends javax.swing.JFrame {
 
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             JOptionPane.showMessageDialog(null, "enter");
         };
     }//GEN-LAST:event_jPasswordField1KeyPressed
