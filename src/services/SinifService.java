@@ -148,6 +148,7 @@ public class SinifService {
     }
 
     public void deleteOgretmen(int sinifId) {
+        ogretmenService = new OgretmenService();
         String QUERY = "UPDATE sinif set ogretmen_id=null where id='" + sinifId + "' ";
         ogretmenService.deleteSinif(sinifId);
         InsertUpdateDelete.setData(QUERY, "");
@@ -216,6 +217,29 @@ public class SinifService {
 
     public static void main(String[] args) {
 
+    }
+
+    public List<Sinif> findAllByOgretmenIsNull() {
+        List<Sinif> siniflar = new ArrayList<>();
+
+        ResultSet rs = Select.getData("SELECT * FROM sinif where ogretmen_id is null");
+
+        try {
+            while (rs.next()) {
+                Sinif sinif = new Sinif();
+                sinif.setId(Integer.parseInt(rs.getString(1)));
+                sinif.setKapasite(Integer.parseInt(rs.getString(2)));
+                sinif.setNo(rs.getString(3));
+                siniflar.add(sinif);
+            }
+            rs.close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            e.printStackTrace();
+            System.out.println("SınıfService findAll error" + e.getMessage());
+        }
+        return siniflar;
     }
 
 }

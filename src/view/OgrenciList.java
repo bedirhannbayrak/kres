@@ -173,7 +173,7 @@ public class OgrenciList extends javax.swing.JFrame {
         jLabel8.setText("Eski Sınıf");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setText("Ogrenci Ekle");
+        jLabel9.setText("Sınıf Degistir");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("Yeni Sınıf");
@@ -311,7 +311,7 @@ public class OgrenciList extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
 
-        List<OgrenciSinifOgretmenTableDto> ogrenciler = ogrenciService.findAllTableDto();
+        List<OgrenciSinifOgretmenTableDto> ogrenciler = ogrenciService.findAllOgrenciSinifOgretmenTableDto();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
         ogrenciler.forEach(i -> {
